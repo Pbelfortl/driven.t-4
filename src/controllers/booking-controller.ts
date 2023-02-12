@@ -16,9 +16,11 @@ export async function getBooking (req: AuthenticatedRequest, res: Response) {
         res.status(200).send(booking)
 
     } catch (error) {
-
+        if (error.name === "NotFoundError"){
+            return res.sendStatus(httpStatus.NOT_FOUND)
+        }
         console.log(error)
-        return res.sendStatus(500)
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }
 
@@ -36,10 +38,10 @@ export async function createBooking (req: AuthenticatedRequest, res: Response) {
     } catch (error) {
 
         if (error.name === "ForbiddenError"){
-            return res.send(httpStatus.FORBIDDEN)
+            return res.sendStatus(httpStatus.FORBIDDEN)
         }
         if (error.name === "NotFoundError"){
-            return res.send(httpStatus.NOT_FOUND)
+            return res.sendStatus(httpStatus.NOT_FOUND)
         }
         return res.sendStatus(403)
     }
@@ -59,11 +61,11 @@ export async function changeRoom (req: AuthenticatedRequest, res: Response) {
     } catch (error) {
 
         if (error.name === "ForbiddenError"){
-            return res.send(httpStatus.FORBIDDEN)
+            return res.sendStatus(httpStatus.FORBIDDEN)
         }
         if (error.name === "NotFoundError"){
-            return res.send(httpStatus.NOT_FOUND)
+            return res.sendStatus(httpStatus.NOT_FOUND)
         }
-        res.sendStatus(403)
+        res.sendStatus(httpStatus.FORBIDDEN)
     }
 }

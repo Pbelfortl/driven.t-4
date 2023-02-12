@@ -9,7 +9,7 @@ import { FORBIDDEN } from "http-status";
 
 export async function getBooking (userId: number){
 
-    const booking = bookingRepository.getBooking(userId)
+    const booking = await bookingRepository.getBooking(userId)
 
     if(!booking) {
         throw notFoundError()
